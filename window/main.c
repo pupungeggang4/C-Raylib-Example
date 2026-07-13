@@ -40,7 +40,7 @@ int main(void) {
     } else {
         width = monitorWidth * 0.8f;
         height = width * 3 / 4;
-    );
+    }
     SetWindowSize(width, height);
     SetWindowPosition(
         (monitorWidth - width) / 2, (monitorHeight - height) / 2
