@@ -40,12 +40,15 @@ int main(void) {
     } else {
         width = monitorWidth * 0.8f;
         height = width * 3 / 4;
-    }
-    #endif
+    );
     SetWindowSize(width, height);
     SetWindowPosition(
         (monitorWidth - width) / 2, (monitorHeight - height) / 2
     );
+    #else
+    SetWindowSize(width, height);
+    #endif
+
  
     float scale = (float)width / 800.0f;
     camera.zoom = scale;
