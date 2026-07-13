@@ -53,3 +53,11 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# Emscripten output
+index.*
+
+# Etc
+.DS_Store
+*.png~
+*.swp
