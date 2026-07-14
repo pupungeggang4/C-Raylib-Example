@@ -27,8 +27,8 @@ void UpdateDrawFrame(void) {
 }
 
 int main(void) {
-    InitWindow(100, 100, "raylib window");
     #ifndef __EMSCRIPTEN__
+    InitWindow(100, 100, "raylib window");
     int currentMonitor = GetCurrentMonitor();
     int monitorWidth = GetMonitorWidth(currentMonitor);
     int monitorHeight = GetMonitorHeight(currentMonitor);
@@ -46,7 +46,7 @@ int main(void) {
         (monitorWidth - width) / 2, (monitorHeight - height) / 2
     );
     #else
-    SetWindowSize(width, height);
+    InitWindow(width, height, "raylib window");
     #endif
 
  
