@@ -30,6 +30,7 @@ if(EMSCRIPTEN)
     target_link_options(main PRIVATE 
         "-Os"
         "-sUSE_GLFW=3"
+        "-DPLATFORM_WEB"
     )
 endif()
 
