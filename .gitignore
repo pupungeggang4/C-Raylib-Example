@@ -65,3 +65,4 @@ index.*
 .DS_Store
 *.png~
 *.swp
+build/
