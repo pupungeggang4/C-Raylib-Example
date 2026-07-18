@@ -13,6 +13,8 @@ typedef struct GameVar {
     int width;
     int height;
     KeyPressed keyPressed;
+    float dt;
+
     Camera2D camera;
     Player player;
     Enemy enemy[50];
