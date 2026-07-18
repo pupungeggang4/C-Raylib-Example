@@ -2,7 +2,7 @@
 #include <emscripten.h>
 #endif
 
-#include "raylib.h"
+#include <raylib.h>
 #include <stdio.h>
 
 void loop() {
