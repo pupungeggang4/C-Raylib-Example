@@ -35,5 +35,6 @@ if(EMSCRIPTEN)
         "-Os"
         "-sUSE_GLFW=3"
         "-DPLATFORM_WEB"
+        "--preload-file=${CMAKE_SOURCE_DIR}/asset@asset"
     )
 endif()

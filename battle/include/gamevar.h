@@ -1,11 +1,18 @@
 #pragma once
 #include "includes.h"
+#include "asset.h"
 #include "player.h"
 #include "enemy.h"
 
+typedef struct KeyPressed {
+    int left; int right; int up; int down;
+} KeyPressed;
+
 typedef struct GameVar {
+    Tex tex;
     int width;
     int height;
+    KeyPressed keyPressed;
     Camera2D camera;
     Player player;
     Enemy enemy[50];

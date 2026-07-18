@@ -1,4 +1,5 @@
 #include "game.h"
+#include "asset.h"
 
 void initGame(GameVar* gameVar) {
     gameVar->width = 800;
@@ -29,9 +30,12 @@ void initGame(GameVar* gameVar) {
     float scale = (float)gameVar->width / 800.0f;
     gameVar->camera.zoom = scale;
 
+    loadAsset(&gameVar->tex);
+
     #ifdef __EMSCRIPTEN__
     emscripten_set_main_loop_arg(loop, gameVar, 0, 1);
     #else
+    SetTargetFPS(60);
     while(!WindowShouldClose()) {
         loop(gameVar);
     }
@@ -48,9 +52,7 @@ void loop(void* arg) {
     BeginDrawing();
     ClearBackground(RAYWHITE);
     BeginMode2D(gameVar->camera);
-    DrawRectangle(0, 0, 800, 600, LIGHTGRAY);
-    DrawCircle(400, 300, 100, MAROON);
-    DrawText("Scaled with Camera2D!", 60, 60, 20, DARKGRAY);
+    DrawTexture(gameVar->tex.player, 10, 10, WHITE);
     EndMode2D();
     EndDrawing();
 }
