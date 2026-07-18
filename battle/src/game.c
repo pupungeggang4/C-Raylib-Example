@@ -33,7 +33,7 @@ void initGame(GameVar* gameVar) {
     emscripten_set_main_loop_arg(loop, gameVar, 0, 1);
     #else
     while(!WindowShouldClose()) {
-        loop();
+        loop(gameVar);
     }
     #endif
 }
