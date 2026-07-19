@@ -8,6 +8,7 @@ void initGame(GameVar* gameVar) {
     gameVar->height = 600;
 
     #ifndef __EMSCRIPTEN__
+    SetConfigFlags(FLAG_WINDOW_HIGHDPI);
     InitWindow(800, 600, "Simple Battle Game");
     int currentMonitor = GetCurrentMonitor();
     int monitorWidth = GetMonitorWidth(currentMonitor);
@@ -28,9 +29,8 @@ void initGame(GameVar* gameVar) {
     #else
     InitWindow(gameVar->width, gameVar->height, "Simple Battle Game");
     #endif
-    
-    float scale = (float)gameVar->width / 800.0f;
-    gameVar->camera.zoom = scale;
+
+    gameVar->camera.zoom = GetRenderWidth() / 800.0f;
 
     loadAsset(&gameVar->tex);
 
