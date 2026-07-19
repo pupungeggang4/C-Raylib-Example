@@ -6,5 +6,9 @@ typedef struct Tex {
     Texture2D enemy;
 } Tex;
 
-void loadAsset(Tex*);
-void disposeAsset(Tex*);
+typedef struct Aud {
+    Music music;
+} Aud;
+
+void loadAsset(Tex*, Aud*);
+void disposeAsset(Tex*, Aud*);

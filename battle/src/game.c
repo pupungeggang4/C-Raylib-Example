@@ -32,8 +32,8 @@ void initGame(GameVar* gameVar) {
     #endif
 
     gameVar->camera.zoom = GetRenderWidth() / 800.0f;
-
-    loadAsset(&gameVar->tex);
+    InitAudioDevice();
+    loadAsset(&gameVar->tex, &gameVar->aud);
 
     gameVar->player.rect = (Rect){{400, 300}, {80, 80}};
     gameVar->player.speed = 400.0f;
@@ -60,6 +60,7 @@ void initGame(GameVar* gameVar) {
 void loop(void* arg) {
     GameVar* gameVar = (GameVar*)arg;
     gameVar->dt = GetFrameTime();
+    UpdateMusicStream(gameVar->aud.music);
     update(gameVar);
     render(gameVar);
 }
@@ -73,6 +74,11 @@ void update(GameVar* gameVar) {
         Vector2 pos = GetScreenToWorld2D(Vector2Scale(GetMousePosition(), GetWindowScaleDPI().x), gameVar->camera);
         #endif
         printf("(%.0f, %.0f)\n", pos.x, pos.y);
+
+        if (!gameVar->audReady) {
+            PlayMusicStream(gameVar->aud.music);
+            gameVar->audReady = 1;
+        }
     }
 
     if (IsKeyPressed(KEY_A)) gameVar->keyPressed.left = 1;
@@ -89,7 +95,8 @@ void update(GameVar* gameVar) {
         #ifdef __EMSCRIPTEN__
         emscripten_cancel_main_loop();
         #else
-        disposeAsset(&gameVar->tex);
+        disposeAsset(&gameVar->tex, &gameVar->aud);
+        CloseAudioDevice();
         CloseWindow();
         #endif
     }

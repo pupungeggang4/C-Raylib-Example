@@ -10,6 +10,8 @@ typedef struct KeyPressed {
 
 typedef struct GameVar {
     Tex tex;
+    Aud aud;
+    int audReady;
     int width;
     int height;
     KeyPressed keyPressed;
