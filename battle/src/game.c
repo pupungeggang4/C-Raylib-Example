@@ -59,6 +59,18 @@ void initGame(GameVar* gameVar) {
 
 void loop(void* arg) {
     GameVar* gameVar = (GameVar*)arg;
+
+    if (IsKeyPressed(KEY_GRAVE)) {
+        #ifdef __EMSCRIPTEN__
+        emscripten_cancel_main_loop();
+        #else
+        disposeAsset(&gameVar->tex, &gameVar->aud);
+        CloseAudioDevice();
+        CloseWindow();
+        #endif
+        return;
+    }
+
     gameVar->dt = GetFrameTime();
     UpdateMusicStream(gameVar->aud.music);
     update(gameVar);
@@ -90,16 +102,6 @@ void update(GameVar* gameVar) {
     if (IsKeyReleased(KEY_D)) gameVar->keyPressed.right = 0;
     if (IsKeyReleased(KEY_W)) gameVar->keyPressed.up = 0;
     if (IsKeyReleased(KEY_S)) gameVar->keyPressed.down = 0;
-    
-    if (IsKeyPressed(KEY_GRAVE)) {
-        #ifdef __EMSCRIPTEN__
-        emscripten_cancel_main_loop();
-        #else
-        disposeAsset(&gameVar->tex, &gameVar->aud);
-        CloseAudioDevice();
-        CloseWindow();
-        #endif
-    }
 
     movePlayer(gameVar, &gameVar->player);
     for (int i = 0; i < 50; i++) {
