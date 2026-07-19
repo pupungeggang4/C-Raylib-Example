@@ -63,6 +63,9 @@ void loop(void* arg) {
     if (IsKeyPressed(KEY_GRAVE)) {
         #ifdef __EMSCRIPTEN__
         emscripten_cancel_main_loop();
+        disposeAsset(&gameVar->tex, &gameVar->aud);
+        CloseAudioDevice();
+        CloseWindow();
         #else
         disposeAsset(&gameVar->tex, &gameVar->aud);
         CloseAudioDevice();
