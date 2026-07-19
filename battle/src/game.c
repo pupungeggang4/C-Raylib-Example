@@ -68,35 +68,24 @@ void loop(void* arg) {
 void update(GameVar* gameVar) {
     gameVar->camera.zoom = GetRenderWidth() / 800.0f;
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        #ifdef __EMSCRIPTEN__
+        Vector2 pos = GetScreenToWorld2D(GetMousePosition(), gameVar->camera);
+        #else
         Vector2 pos = GetScreenToWorld2D(Vector2Scale(GetMousePosition(), GetWindowScaleDPI().x), gameVar->camera);
+        #endif
         printf("(%.0f, %.0f)\n", pos.x, pos.y);
     }
 
-    if (IsKeyPressed(KEY_A)) {
-        gameVar->keyPressed.left = 1;
-    }
-    if (IsKeyPressed(KEY_D)) {
-        gameVar->keyPressed.right = 1;
-    }
-    if (IsKeyPressed(KEY_W)) {
-        gameVar->keyPressed.up = 1;
-    }
-    if (IsKeyPressed(KEY_S)) {
-        gameVar->keyPressed.down = 1;
-    }
+    if (IsKeyPressed(KEY_A)) gameVar->keyPressed.left = 1;
+    if (IsKeyPressed(KEY_D)) gameVar->keyPressed.right = 1;
+    if (IsKeyPressed(KEY_W)) gameVar->keyPressed.up = 1;
+    if (IsKeyPressed(KEY_S)) gameVar->keyPressed.down = 1;
 
-    if (IsKeyReleased(KEY_A)) {
-        gameVar->keyPressed.left = 0;
-    }
-    if (IsKeyReleased(KEY_D)) {
-        gameVar->keyPressed.right = 0;
-    }
-    if (IsKeyReleased(KEY_W)) {
-        gameVar->keyPressed.up = 0;
-    }
-    if (IsKeyReleased(KEY_S)) {
-        gameVar->keyPressed.down = 0;
-    }
+    if (IsKeyReleased(KEY_A)) gameVar->keyPressed.left = 0;
+    if (IsKeyReleased(KEY_D)) gameVar->keyPressed.right = 0;
+    if (IsKeyReleased(KEY_W)) gameVar->keyPressed.up = 0;
+    if (IsKeyReleased(KEY_S)) gameVar->keyPressed.down = 0;
+    
     if (IsKeyPressed(KEY_GRAVE)) {
         #ifdef __EMSCRIPTEN__
         emscripten_cancel_main_loop();
