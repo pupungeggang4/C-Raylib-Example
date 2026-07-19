@@ -30,6 +30,7 @@ void initGame(GameVar* gameVar) {
     InitWindow(gameVar->width, gameVar->height, "Simple Battle Game");
     #endif
 
+    printf("%f", GetWindowScaleDPI());
     gameVar->camera.zoom = GetRenderWidth() / 800.0f;
 
     loadAsset(&gameVar->tex);
