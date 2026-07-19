@@ -51,8 +51,7 @@ void initGame(GameVar* gameVar) {
     emscripten_set_main_loop_arg(loop, gameVar, 0, 1);
     #else
     SetTargetFPS(60);
-    gameVar->running = 1;
-    while(gameVar->running) {
+    while(!WindowShouldClose()) {
         loop(gameVar);
     }
     #endif
@@ -89,9 +88,9 @@ void update(GameVar* gameVar) {
     if (IsKeyPressed(KEY_GRAVE)) {
         #ifdef __EMSCRIPTEN__
         emscripten_cancel_main_loop();
-        disposeAsset(&gameVar->tex);
         #else
-        gameVar->running = 0;
+        disposeAsset(&gameVar->tex);
+        CloseWindow();
         #endif
     }
 
