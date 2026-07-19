@@ -50,7 +50,8 @@ void initGame(GameVar* gameVar) {
     emscripten_set_main_loop_arg(loop, gameVar, 0, 1);
     #else
     SetTargetFPS(60);
-    while(!WindowShouldClose()) {
+    gameVar->running = 1;
+    while(gameVar->running) {
         loop(gameVar);
     }
     #endif
@@ -99,7 +100,7 @@ void update(GameVar* gameVar) {
         emscripten_cancel_main_loop();
         disposeAsset(&gameVar->tex);
         #else
-        CloseWindow();
+        gameVar->running = 0;
         #endif
     }
 
