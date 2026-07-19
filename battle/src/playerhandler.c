@@ -18,3 +18,7 @@ void movePlayer(GameVar* gameVar, Player* player) {
         player->rect.pos.y += speed * gameVar->dt;
     }
 }
+
+void renderPlayer(GameVar* gameVar, Player* player) {
+    DrawTexture(*player->texture, player->rect.pos.x - player->rect.size.x / 2.0f, player->rect.pos.y - player->rect.size.y / 2.0f, WHITE);
+}

@@ -1,6 +1,7 @@
 #include "game.h"
 #include "asset.h"
 #include "playerhandler.h"
+#include "enemyhandler.h"
 
 void initGame(GameVar* gameVar) {
     gameVar->width = 800;
@@ -35,6 +36,15 @@ void initGame(GameVar* gameVar) {
 
     gameVar->player.rect = (Rect){{400, 300}, {80, 80}};
     gameVar->player.speed = 400.0f;
+    gameVar->player.texture = &gameVar->tex.player;
+
+    for (int i = 0; i < 50; i++) {
+        initEnemy(gameVar, &gameVar->enemy[i]);
+    }
+    spawnEnemy(gameVar, (Vector2){200, 200});
+    spawnEnemy(gameVar, (Vector2){600, 200});
+    spawnEnemy(gameVar, (Vector2){200, 400});
+    spawnEnemy(gameVar, (Vector2){600, 400});
 
     #ifdef __EMSCRIPTEN__
     emscripten_set_main_loop_arg(loop, gameVar, 0, 1);
@@ -84,15 +94,33 @@ void update(GameVar* gameVar) {
     if (IsKeyReleased(KEY_S)) {
         gameVar->keyPressed.down = 0;
     }
+    if (IsKeyPressed(KEY_GRAVE)) {
+        #ifdef __EMSCRIPTEN__
+        emscripten_cancel_main_loop();
+        disposeAsset(&gameVar->tex);
+        #else
+        CloseWindow();
+        #endif
+    }
 
     movePlayer(gameVar, &gameVar->player);
+    for (int i = 0; i < 50; i++) {
+        if (gameVar->enemy[i].valid) {
+            moveEnemy(gameVar, &gameVar->enemy[i], &gameVar->player);
+        }
+    }
 }
 
 void render(GameVar* gameVar) {
     BeginDrawing();
     ClearBackground(RAYWHITE);
     BeginMode2D(gameVar->camera);
-    DrawTexture(gameVar->tex.player, gameVar->player.rect.pos.x - gameVar->player.rect.size.x / 2.0f, gameVar->player.rect.pos.y - gameVar->player.rect.size.y / 2.0f, WHITE);
+    for (int i = 0; i < 50; i++) {
+        if (gameVar->enemy[i].valid) {
+            renderEnemy(gameVar, &gameVar->enemy[i]);
+        }
+    }
+    renderPlayer(gameVar, &gameVar->player);
     EndMode2D();
     EndDrawing();
 }

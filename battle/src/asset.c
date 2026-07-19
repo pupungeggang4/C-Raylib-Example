@@ -8,4 +8,5 @@ void loadAsset(Tex* tex) {
 void disposeAsset(Tex* tex) {
     UnloadTexture(tex->player);
     UnloadTexture(tex->enemy);
+    printf("Disposed assets\n");
 }

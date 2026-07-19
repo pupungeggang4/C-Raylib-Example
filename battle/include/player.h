@@ -5,5 +5,5 @@
 typedef struct Player {
     Rect rect;
     float speed;
-    Image* texture;
+    Texture2D* texture;
 } Player;
