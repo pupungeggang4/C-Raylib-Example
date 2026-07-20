@@ -11,6 +11,7 @@ void initGame(GameVar* gameVar) {
     SetConfigFlags(FLAG_WINDOW_HIGHDPI);
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(800, 600, "Simple Battle Game");
+    SetExitKey(KEY_NULL);
     int currentMonitor = GetCurrentMonitor();
     int monitorWidth = GetMonitorWidth(currentMonitor);
     int monitorHeight = GetMonitorHeight(currentMonitor);
@@ -30,6 +31,7 @@ void initGame(GameVar* gameVar) {
     #else
     InitWindow(gameVar->width, gameVar->height, "Simple Battle Game");
     #endif
+    gameVar->running = 1;
 
     gameVar->camera.zoom = GetRenderWidth() / 800.0f;
     InitAudioDevice();
@@ -46,38 +48,27 @@ void initGame(GameVar* gameVar) {
     spawnEnemy(gameVar, (Vector2){600, 200});
     spawnEnemy(gameVar, (Vector2){200, 400});
     spawnEnemy(gameVar, (Vector2){600, 400});
-
-    #ifdef __EMSCRIPTEN__
-    emscripten_set_main_loop_arg(loop, gameVar, 0, 1);
-    #else
-    SetTargetFPS(60);
-    while(!WindowShouldClose()) {
-        loop(gameVar);
-    }
-    #endif
 }
 
 void loop(void* arg) {
     GameVar* gameVar = (GameVar*)arg;
-
+    if (WindowShouldClose()) {
+        gameVar->running = 0;
+    }
     if (IsKeyPressed(KEY_GRAVE)) {
-        #ifdef __EMSCRIPTEN__
-        emscripten_cancel_main_loop();
-        disposeAsset(&gameVar->tex, &gameVar->aud);
-        CloseAudioDevice();
-        CloseWindow();
-        #else
-        disposeAsset(&gameVar->tex, &gameVar->aud);
-        CloseAudioDevice();
-        CloseWindow();
-        #endif
-        return;
+        gameVar->running = 0;
     }
 
     gameVar->dt = GetFrameTime();
     UpdateMusicStream(gameVar->aud.music);
     update(gameVar);
     render(gameVar);
+
+    #ifdef __EMSCRIPTEN__
+    if (!gameVar->running) {
+        emscripten_cancel_main_loop();
+    }
+    #endif
 }
 
 void update(GameVar* gameVar) {

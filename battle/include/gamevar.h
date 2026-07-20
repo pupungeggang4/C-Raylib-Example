@@ -14,6 +14,8 @@ typedef struct GameVar {
     int audReady;
     int width;
     int height;
+    int running;
+
     KeyPressed keyPressed;
     float dt;
 
