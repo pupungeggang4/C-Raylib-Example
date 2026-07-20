@@ -52,9 +52,11 @@ void initGame(GameVar* gameVar) {
 
 void loop(void* arg) {
     GameVar* gameVar = (GameVar*)arg;
+    #ifndef __EMSCRIPTEN__
     if (WindowShouldClose()) {
         gameVar->running = 0;
     }
+    #endif
     if (IsKeyPressed(KEY_GRAVE)) {
         gameVar->running = 0;
     }
