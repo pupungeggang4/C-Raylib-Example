@@ -4,6 +4,8 @@
 #include "enemyhandler.h"
 
 void initGame(GameVar* gameVar) {
+    srand(time(0));
+
     gameVar->width = 800;
     gameVar->height = 600;
 
@@ -40,6 +42,7 @@ void initGame(GameVar* gameVar) {
     gameVar->player.rect = (Rect){{400, 300}, {80, 80}};
     gameVar->player.speed = 400.0f;
     gameVar->player.texture = &gameVar->tex.player;
+    gameVar->player.attack = 5.0f;
 
     for (int i = 0; i < 50; i++) {
         initEnemy(gameVar, &gameVar->enemy[i]);
@@ -48,6 +51,9 @@ void initGame(GameVar* gameVar) {
     spawnEnemy(gameVar, (Vector2){600, 200});
     spawnEnemy(gameVar, (Vector2){200, 400});
     spawnEnemy(gameVar, (Vector2){600, 400});
+
+    gameVar->enemySpawnInterval = 1.5f;
+    gameVar->enemySpawnTime = 1.5f;
 }
 
 void loop(void* arg) {
@@ -99,10 +105,33 @@ void update(GameVar* gameVar) {
     if (IsKeyReleased(KEY_W)) gameVar->keyPressed.up = 0;
     if (IsKeyReleased(KEY_S)) gameVar->keyPressed.down = 0;
 
+    handlePlayer(gameVar, &gameVar->player);
     movePlayer(gameVar, &gameVar->player);
     for (int i = 0; i < 50; i++) {
         if (gameVar->enemy[i].valid) {
             moveEnemy(gameVar, &gameVar->enemy[i], &gameVar->player);
+        }
+    }
+
+    gameVar->enemySpawnTime -= gameVar->dt;
+    if (gameVar->enemySpawnTime < 0) {
+        printf("spawn\n");
+        int x, y, spawn;
+        spawn = rand() % 4;
+        x = 20 + rand() % 760; y = 20 + rand() % 560;
+        if (spawn == 0) x = -20;
+        else if (spawn == 1) x = 820;
+        else if (spawn == 2) y = -20;
+        else if (spawn == 3) y = 620;
+        spawnEnemy(gameVar, (Vector2){(float)x, (float)y});
+        gameVar->enemySpawnTime = gameVar->enemySpawnInterval;
+    }
+
+    for (int i = 0; i < 50; i++) {
+        if (gameVar->enemy[i].valid) {
+            if (gameVar->enemy[i].hp <= 0) {
+                gameVar->enemy[i].valid = 0;
+            }
         }
     }
 }

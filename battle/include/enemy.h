@@ -7,4 +7,7 @@ typedef struct Enemy {
     Rect rect;
     float speed;
     Texture* texture;
+
+    float hp;
+    float hpMax;
 } Enemy;

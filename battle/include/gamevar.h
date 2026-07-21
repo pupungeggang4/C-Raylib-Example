@@ -22,4 +22,7 @@ typedef struct GameVar {
     Camera2D camera;
     Player player;
     Enemy enemy[50];
+
+    float enemySpawnInterval;
+    float enemySpawnTime;
 } GameVar;

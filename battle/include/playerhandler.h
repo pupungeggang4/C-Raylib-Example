@@ -5,3 +5,4 @@
 
 void movePlayer(GameVar*, Player*);
 void renderPlayer(GameVar*, Player*);
+void handlePlayer(GameVar*, Player*);

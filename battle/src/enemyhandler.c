@@ -12,6 +12,8 @@ void spawnEnemy(GameVar* gameVar, Vector2 pos) {
         if (!gameVar->enemy[i].valid) {
             gameVar->enemy[i].valid = 1;
             gameVar->enemy[i].rect.pos = pos;
+            gameVar->enemy[i].hp = 30.0f;
+            gameVar->enemy[i].hpMax = 30.0f;
             break;
         }
     }
@@ -28,5 +30,7 @@ void moveEnemy(GameVar* gameVar, Enemy* enemy, Player* player) {
 }
 
 void renderEnemy(GameVar* gameVar, Enemy* enemy) {
+    DrawRectangle(enemy->rect.pos.x - 20, enemy->rect.pos.y - 20, 40, 4, BLACK);
+    DrawRectangle(enemy->rect.pos.x - 20, enemy->rect.pos.y - 20, (int)(enemy->hp / enemy->hpMax * 40), 4, GREEN);
     DrawTexture(*enemy->texture, enemy->rect.pos.x - enemy->rect.size.x / 2.0f, enemy->rect.pos.y - enemy->rect.size.y / 2.0f, WHITE);
 }
