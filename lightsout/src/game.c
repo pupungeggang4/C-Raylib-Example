@@ -32,6 +32,7 @@ void initGame(GameVar* gameVar) {
     #endif
     gameVar->running = 1;
     gameVar->camera.zoom = GetRenderWidth() / 800.0f;
+    printf("%f\n", gameVar->camera.zoom);
     loadAsset(&gameVar->tex);
     gameVar->board.on = gameVar->tex.on;
     gameVar->board.off = gameVar->tex.off;
@@ -74,6 +75,8 @@ void update(GameVar* gameVar) {
 void render(GameVar* gameVar) {
     BeginDrawing();
     ClearBackground(RAYWHITE);
+    BeginMode2D(gameVar->camera);
     boardRender(&gameVar->board);
+    EndMode2D();
     EndDrawing();
 }
