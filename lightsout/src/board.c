@@ -6,12 +6,12 @@ void boardFlip(Board* board, int row, int col) {
         int cRow = row + neighbor[i][0];
         int cCol = col + neighbor[i][1];
         if (boardIsInside(board, cRow, cCol)) {
-            board->cell[cRow][cCol] = !board->cell[cRow][cCell];
+            board->cell[cRow][cCol] = !board->cell[cRow][cCol];
         }
     }
 }
 
-void boardIsInside(Board* board, int row, int col) {
+int boardIsInside(Board* board, int row, int col) {
     return row >= 0 && row < board->row && col >= 0 && col < board->col;
 }
 

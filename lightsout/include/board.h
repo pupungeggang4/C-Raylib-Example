@@ -8,5 +8,5 @@ typedef struct Board {
 } Board;
 
 void boardFlip(Board*, int, int);
-void boardIsInside(Board*, int, int);
+int boardIsInside(Board*, int, int);
 void boardRender(Board*);

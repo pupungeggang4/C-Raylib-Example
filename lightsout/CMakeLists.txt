@@ -3,6 +3,7 @@ project(cmake_example LANGUAGES C)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 if(EMSCRIPTEN)
     set(PLATFORM "Web" CACHE STRING "raylib platform")
@@ -21,7 +22,14 @@ set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(PLATFORM ${PLATFORM} CACHE STRING "" FORCE)
 FetchContent_MakeAvailable(raylib)
 
-add_executable(main src/main.c)
+file(GLOB_RECURSE ALL_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c" 
+)
+
+#file(COPY "${CMAKE_SOURCE_DIR}/asset/font" DESTINATION "${CMAKE_BINARY_DIR}/bin/asset")
+#file(COPY "${CMAKE_SOURCE_DIR}/asset/image" DESTINATION "${CMAKE_BINARY_DIR}/bin/asset")
+
+add_executable(main src/main.c ${ALL_SOURCES})
 target_include_directories(main PUBLIC "${CMAKE_SOURCE_DIR}/include")
 target_link_libraries(main raylib)
 
