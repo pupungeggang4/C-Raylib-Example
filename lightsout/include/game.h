@@ -4,3 +4,6 @@
 
 void initGame(GameVar*);
 void loop(void*);
+void update(GameVar*);
+void render(GameVar*);
+

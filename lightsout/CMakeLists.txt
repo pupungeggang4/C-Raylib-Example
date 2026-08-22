@@ -27,18 +27,18 @@ file(GLOB_RECURSE ALL_SOURCES CONFIGURE_DEPENDS
 )
 
 #file(COPY "${CMAKE_SOURCE_DIR}/asset/font" DESTINATION "${CMAKE_BINARY_DIR}/bin/asset")
-#file(COPY "${CMAKE_SOURCE_DIR}/asset/image" DESTINATION "${CMAKE_BINARY_DIR}/bin/asset")
+file(COPY "${CMAKE_SOURCE_DIR}/asset" DESTINATION "${CMAKE_BINARY_DIR}/bin/asset")
 
 add_executable(main src/main.c ${ALL_SOURCES})
 target_include_directories(main PUBLIC "${CMAKE_SOURCE_DIR}/include")
-target_link_libraries(main raylib)
+target_link_libraries(main PUBLIC raylib)
 
 if(EMSCRIPTEN)
     set_target_properties(main PROPERTIES OUTPUT_NAME "index" SUFFIX ".html")
     target_compile_options(main PRIVATE -Os)
     target_link_options(main PRIVATE 
         "-sUSE_GLFW=3"
-        "-DPLATFORM_WEB" "-sEXPORTED_FUNCTIONS=['_main']" "--preload-file" "asset@asset"
+        "-DPLATFORM_WEB" "-sEXPORTED_FUNCTIONS=['_main']" "--preload-file" "${CMAKE_SOURCE_DIR}/asset@asset"
     )
     target_link_libraries(main PRIVATE idbfs.js)
 endif()

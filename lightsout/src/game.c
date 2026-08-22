@@ -1,8 +1,10 @@
 #include "game.h"
+#include "board.h"
 
 void initGame(GameVar* gameVar) {
     srand(time(NULL));
-
+    gameVar->width = 800;
+    gameVar->height = 600;
     #ifndef __EMSCRIPTEN__
     SetTargetFPS(60);
     SetConfigFlags(FLAG_WINDOW_HIGHDPI);
@@ -30,6 +32,11 @@ void initGame(GameVar* gameVar) {
     #endif
     gameVar->running = 1;
     gameVar->camera.zoom = GetRenderWidth() / 800.0f;
+    loadAsset(&gameVar->tex);
+    gameVar->board.on = gameVar->tex.on;
+    gameVar->board.off = gameVar->tex.off;
+
+    boardInit(&gameVar->board, 7, 7);
 }
 
 void loop(void* p) {
@@ -47,7 +54,26 @@ void loop(void* p) {
         gameVar->running = 0;
     }
 
+    update(gameVar);
+    render(gameVar);
+}
+
+void update(GameVar* gameVar) {
+    gameVar->camera.zoom = GetRenderWidth() / 800.0f;
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        #ifdef __EMSCRIPTEN__
+        Vector2 pos = GetScreenToWorld2D(GetMousePosition(), gameVar->camera);
+        #else
+        Vector2 pos = GetScreenToWorld2D(Vector2Scale(GetMousePosition(), GetWindowScaleDPI().x), gameVar->camera);
+        #endif
+        printf("(%.0f, %.0f)\n", pos.x, pos.y);
+        boardFlip(&gameVar->board, (int)(pos.y / 80), (int)(pos.x / 80));
+    }
+}
+
+void render(GameVar* gameVar) {
     BeginDrawing();
     ClearBackground(RAYWHITE);
+    boardRender(&gameVar->board);
     EndDrawing();
 }
