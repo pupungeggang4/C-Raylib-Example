@@ -48,7 +48,6 @@ int main(void) {
     #else
     InitWindow(width, height, "raylib window");
     #endif
-
  
     float scale = (float)width / 800.0f;
     camera.zoom = scale;
