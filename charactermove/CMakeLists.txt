@@ -26,7 +26,7 @@ file(GLOB_RECURSE ALL_SOURCES CONFIGURE_DEPENDS
 
 file(COPY "${CMAKE_SOURCE_DIR}/asset" DESTINATION "${CMAKE_BINARY_DIR}/bin")
 
-add_executable(main src/main.cpp ${ALL_SOURCES})
+add_executable(main src/main.c ${ALL_SOURCES})
 target_include_directories(main PUBLIC "${CMAKE_SOURCE_DIR}/include")
 target_link_libraries(main raylib)
 
