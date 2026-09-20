@@ -2,19 +2,27 @@
 #include "gamevar.h"
 #include "game.h"
 
-#ifdef __EMSCRITPEN__
-void loopGame(GameVar* gameVar) {
+#ifdef __EMSCRIPTEN__
+void loopGame() {
+    loop(&gameVar);
 }
 
-void startGame(GameVar* gameVar) {
+void startGame() {
+    initGame(&gameVar);
+    emscripten_set_main_loop(loopGame, 0, 0);
 }
 #endif
 
 int main(int argc, char** argv) {
-    #ifdef __ENSCRIPTEN__
+    #ifdef __EMSCRIPTEN__
+    startGame();
     #else
     initGame(&gameVar);
-    loop(&gameVar);
+    while (gameVar.running == 1) {
+        loop(&gameVar);
+    }
+    endGame(&gameVar);
+    CloseWindow();
     #endif
     return 0;
 }
