@@ -52,8 +52,10 @@ void loop(GameVar* gameVar) {
 
     BeginDrawing();
     ClearBackground(RAYWHITE);
+    BeginMode2D(gameVar->camera);
     DrawText(TextFormat("FPS: %i", GetFPS()), 20, 560, 20, DARKGRAY);
     render(gameVar);
+    EndMode2D();
     EndDrawing();
 
     #ifdef __EMSCRIPTEN__
