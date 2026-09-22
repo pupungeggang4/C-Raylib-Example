@@ -4,6 +4,8 @@
 typedef struct {
     Texture2D player;
     Texture2D entity;
+    Texture2D arrowLeft;
+    Texture2D arrowRight;
 } Asset;
 
 extern Asset asset;

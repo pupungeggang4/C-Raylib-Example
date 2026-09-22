@@ -10,6 +10,9 @@ typedef struct {
     float textLevel[2];
     float buttonQuit[4];
     float textQuit[2];
+    float textLevelCurrent[2];
+    float buttonDown[4];
+    float buttonUp[4];
 } UI;
 
 extern UI ui;

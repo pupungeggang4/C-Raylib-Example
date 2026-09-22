@@ -35,6 +35,7 @@ void initGame(GameVar* gameVar) {
     loadAsset(&asset);
     gameVar->running = 1;
     gameVar->scene = TITLE;
+    sceneTitleReady(gameVar);
     gameVar->state = NORMAL;
     Camera2D baseCamera = {0};
     gameVar->camera = baseCamera;
