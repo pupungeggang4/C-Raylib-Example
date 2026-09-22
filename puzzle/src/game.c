@@ -3,6 +3,8 @@
 #include "gamevar.h"
 #include "scene.h"
 #include "game.h"
+#include "util.h"
+#include "board.h"
 
 void initGame(GameVar* gameVar) {
     #ifdef __EMSCRIPTEN__
@@ -40,6 +42,7 @@ void initGame(GameVar* gameVar) {
     Camera2D baseCamera = {0};
     gameVar->camera = baseCamera;
     gameVar->camera.zoom = GetRenderWidth() / 800.0f;
+    loadBoard(&gameVar->board, "asset/data/level1.txt");
 }
 
 void loop(GameVar* gameVar) {

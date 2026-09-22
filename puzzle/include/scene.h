@@ -3,7 +3,7 @@
 
 struct GameVar;
 
-typedef struct {
+typedef struct Scene {
     void (*loopFunc)(GameVar*);
     void (*mouseUpLeftFunc)(GameVar*, Vector2);
     void (*keyDownFunc)(GameVar*, int);

@@ -12,6 +12,6 @@
 #include <raylib.h>
 #include <raymath.h>
 
-enum Types {PLAYER, WALL, ROCK, GOAL};
+enum Types {EMPTY, WALL, ROCK, GOAL, PLAYER};
 enum GameScene {TITLE, FIELD};
 enum GameState {NORMAL, MENU};

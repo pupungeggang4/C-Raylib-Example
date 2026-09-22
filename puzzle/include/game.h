@@ -1,7 +1,7 @@
 #pragma once
 #include "includes.h"
 
-struct GameVar;
+typedef struct GameVar GameVar;
 void initGame(GameVar*);
 void loop(GameVar*);
 void render(GameVar*);

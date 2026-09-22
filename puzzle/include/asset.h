@@ -1,7 +1,7 @@
 #pragma once
 #include "includes.h"
 
-typedef struct {
+typedef struct Asset {
     Texture2D player;
     Texture2D entity;
     Texture2D arrowLeft;
