@@ -1,4 +1,5 @@
 #include "board.h"
+#include "entity.h"
 
 void loadBoard(Board* board, const char* path) {
     FILE *fp;
@@ -15,6 +16,12 @@ void loadBoard(Board* board, const char* path) {
                 if (i < row && j < col) {
                     int type;
                     fscanf(fp, "%d", &type);
+                    if (type == EMPTY) continue;
+                    else if (type == GOAL) {
+
+                    } else {
+                        setEntity(board->cell[i][j], type);
+                    }
                 }
             }
         }

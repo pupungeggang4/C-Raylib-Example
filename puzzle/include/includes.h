@@ -15,3 +15,11 @@
 enum Types {EMPTY, WALL, ROCK, GOAL, PLAYER};
 enum GameScene {TITLE, FIELD};
 enum GameState {NORMAL, MENU};
+
+extern dataEntity[5][2] = {
+    {0, 0},
+    {0, 1},
+    {1, 1},
+    {0, 0},
+    {1, 1}
+};
